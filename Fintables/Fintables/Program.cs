@@ -10,18 +10,23 @@ namespace Fintables
     {
         static void Main(string[] args)
         {
-            SeleniumUtils su = new SeleniumUtils();
+            SeleniumUtils su = new SeleniumUtils(new ChromeDriver(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)));
 
-            su.Run();
+
         }
     }
 
     class SeleniumUtils
     {
+        private readonly IWebDriver driver;
+
+        public SeleniumUtils(IWebDriver driver)
+        {
+            this.driver = driver;
+        }
+
         public void Run()
         {
-            IWebDriver driver = new ChromeDriver(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location));
-
             driver.Url = "https://fintables.com/";
 
             driver.Manage().Window.Maximize();
@@ -36,6 +41,25 @@ namespace Fintables
 
             // Click Form Submit Button
             driver.FindElement(By.XPath("//*[@id='root']/div/section/main/div/div/div[2]/div[2]/form/button")).Click();
+        }
+
+        public string GetHtmlOfPage(string url)
+        {
+            driver.Url = url;
+
+            return driver.PageSource;
+        }
+
+        public string GetInnerHTML(string xPath)
+        {
+            var element = driver.FindElement(By.XPath(xPath));
+
+            return GetInnerHTML(element);
+        }
+
+        public string GetInnerHTML(IWebElement element)
+        {
+            return element.GetAttribute("innerHtml");
         }
     }
 }
