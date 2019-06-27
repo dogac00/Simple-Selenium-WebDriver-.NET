@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29020.237
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fintables", "Fintables\Fintables.csproj", "{03E9E4FA-A69F-485D-A813-D0C0C8222C8C}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{03E9E4FA-A69F-485D-A813-D0C0C8222C8C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{03E9E4FA-A69F-485D-A813-D0C0C8222C8C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{03E9E4FA-A69F-485D-A813-D0C0C8222C8C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{03E9E4FA-A69F-485D-A813-D0C0C8222C8C}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {15029B23-2299-42DF-98E1-40CE547AD761}
+	EndGlobalSection
+EndGlobal
