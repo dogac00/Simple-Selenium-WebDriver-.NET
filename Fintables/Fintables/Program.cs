@@ -1,6 +1,5 @@
-﻿using OpenQA.Selenium;
-using OpenQA.Selenium.Chrome;
-using System;
+﻿using OpenQA.Selenium.Chrome;
+using OpenQA.Selenium.Support;
 using System.IO;
 using System.Reflection;
 
@@ -10,56 +9,9 @@ namespace Fintables
     {
         static void Main(string[] args)
         {
-            SeleniumUtils su = new SeleniumUtils(new ChromeDriver(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)));
+            DriverUtils manager = new DriverUtils(new ChromeDriver(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)));
 
-
-        }
-    }
-
-    class SeleniumUtils
-    {
-        private readonly IWebDriver driver;
-
-        public SeleniumUtils(IWebDriver driver)
-        {
-            this.driver = driver;
-        }
-
-        public void Run()
-        {
-            driver.Url = "https://fintables.com/";
-
-            driver.Manage().Window.Maximize();
-            driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(10);
-
-            // Click Login Button
-            driver.FindElement(By.XPath("//*[@id='root']/div/section/main/div[1]/div/ul/li[10]/div/a[1]")).Click();
-
-            // Fill Login Form
-            driver.FindElement(By.XPath("//*[@id='root']/div/section/main/div/div/div[2]/div[2]/form/div[1]/div[2]/div/span/input")).SendKeys("test@test.com");
-            driver.FindElement(By.XPath("//*[@id='root']/div/section/main/div/div/div[2]/div[2]/form/div[2]/div[2]/div/span/input")).SendKeys("test123456");
-
-            // Click Form Submit Button
-            driver.FindElement(By.XPath("//*[@id='root']/div/section/main/div/div/div[2]/div[2]/form/button")).Click();
-        }
-
-        public string GetHtmlOfPage(string url)
-        {
-            driver.Url = url;
-
-            return driver.PageSource;
-        }
-
-        public string GetInnerHTML(string xPath)
-        {
-            var element = driver.FindElement(By.XPath(xPath));
-
-            return GetInnerHTML(element);
-        }
-
-        public string GetInnerHTML(IWebElement element)
-        {
-            return element.GetAttribute("innerHtml");
+            manager.GoToFinTables();
         }
     }
 }
