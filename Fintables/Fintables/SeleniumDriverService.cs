@@ -1,17 +1,32 @@
 ﻿using OpenQA.Selenium;
+using OpenQA.Selenium.Chrome;
 using System.Collections.Generic;
+using System.IO;
+using System.Reflection;
 
 namespace Fintables
 {
-    class DriverUtils
+    class SeleniumDriverService : ISeleniumDriver
     {
         private readonly IWebDriver driver;
         private readonly IJavaScriptExecutor js;
 
-        public DriverUtils(IWebDriver driver)
+        public static string ChromePath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+        public static ChromeOptions ChromeOptions = SetChromeOptions(new ChromeOptions());
+
+        public SeleniumDriverService(IWebDriver driver)
         {
             this.driver = driver;
             this.js = (IJavaScriptExecutor)driver;
+        }
+
+        private static ChromeOptions SetChromeOptions(ChromeOptions options)
+        {
+            options.AddArguments("--whitelist-ip *");
+            options.AddArguments("--proxy-server='direct://'");
+            options.AddArguments("--proxy-bypass-list=*");
+
+            return options;
         }
 
         public IWebElement FindElementContains(string text)

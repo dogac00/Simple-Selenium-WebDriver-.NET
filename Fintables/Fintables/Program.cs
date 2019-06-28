@@ -9,9 +9,11 @@ namespace Fintables
     {
         static void Main(string[] args)
         {
-            DriverUtils manager = new DriverUtils(new ChromeDriver(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)));
+            ISeleniumDriver driver = new SeleniumDriverService(new ChromeDriver(SeleniumDriverService.ChromePath, SeleniumDriverService.ChromeOptions));
 
-            manager.GoToFinTables();
+            HtmlAgilityPackService service = new HtmlAgilityPackService(driver);
+
+            service.Agility();
         }
     }
 }
