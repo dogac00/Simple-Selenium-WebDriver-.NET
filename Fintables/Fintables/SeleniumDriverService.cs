@@ -2,6 +2,7 @@
 using OpenQA.Selenium.Chrome;
 using System.Collections.Generic;
 using System.IO;
+using System.Net.Http;
 using System.Reflection;
 
 namespace Fintables
@@ -39,29 +40,6 @@ namespace Fintables
             return driver.FindElements(By.XPath($"//*[contains(text(), '{ text }')]"));
         }
 
-        public void GoToFinTables()
-        {
-            driver.Url = "https://fintables.com/";
-
-            driver.MaximizeWindow();
-            driver.SetTimeout(10);
-
-            // Click Login Button
-            driver.FindElement(By.XPath("//*[@id='root']/div/section/main/div[1]/div/ul/li[10]/div/a[1]")).Click();
-
-            // Fill Login Form
-            driver.FindElement(By.XPath("//*[@id='root']/div/section/main/div/div/div[2]/div[2]/form/div[1]/div[2]/div/span/input")).SendKeys("test@test.com");
-            driver.FindElement(By.XPath("//*[@id='root']/div/section/main/div/div/div[2]/div[2]/form/div[2]/div[2]/div/span/input")).SendKeys("test123456");
-
-            // Click Form Submit Button
-            driver.FindElement(By.XPath("//*[@id='root']/div/section/main/div/div/div[2]/div[2]/form/button")).Click();
-
-            // Click Forgotten Button
-            var forgottenButton = driver.FindContains("unuttum");
-
-            forgottenButton.Click();
-        }
-
         public void ConsoleLogJS(string val)
         {
             IJavaScriptExecutor js = (IJavaScriptExecutor) driver;
@@ -86,6 +64,29 @@ namespace Fintables
         public string GetInnerHTML(IWebElement element)
         {
             return element.GetAttribute("innerHtml");
+        }
+
+        public void GoToFintables()
+        {
+            driver.Url = "https://fintables.com/";
+
+            driver.MaximizeWindow();
+            driver.SetTimeout(10);
+
+            // Click Login Button
+            driver.FindElement(By.XPath("//*[@id='root']/div/section/main/div[1]/div/ul/li[10]/div/a[1]")).Click();
+
+            // Fill Login Form
+            driver.FindElement(By.XPath("//*[@id='root']/div/section/main/div/div/div[2]/div[2]/form/div[1]/div[2]/div/span/input")).SendKeys("test@test.com");
+            driver.FindElement(By.XPath("//*[@id='root']/div/section/main/div/div/div[2]/div[2]/form/div[2]/div[2]/div/span/input")).SendKeys("test123456");
+
+            // Click Form Submit Button
+            driver.FindElement(By.XPath("//*[@id='root']/div/section/main/div/div/div[2]/div[2]/form/button")).Click();
+
+            // Click Forgotten Button
+            var forgottenButton = driver.FindContains("unuttum");
+
+            forgottenButton.Click();
         }
     }
 }

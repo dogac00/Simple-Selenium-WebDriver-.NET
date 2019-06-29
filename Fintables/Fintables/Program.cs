@@ -9,11 +9,9 @@ namespace Fintables
     {
         static void Main(string[] args)
         {
-            ISeleniumDriver driver = new SeleniumDriverService(new ChromeDriver(SeleniumDriverService.ChromePath, SeleniumDriverService.ChromeOptions));
+            var driver = new SeleniumDriverService(new ChromeDriver(SeleniumDriverService.ChromePath, SeleniumDriverService.ChromeOptions));
 
-            HtmlAgilityPackService service = new HtmlAgilityPackService(driver);
-
-            service.Agility();
+            driver.GoToFintables();
         }
     }
 }
