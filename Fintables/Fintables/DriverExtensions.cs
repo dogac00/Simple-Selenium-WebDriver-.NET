@@ -19,5 +19,10 @@ namespace Fintables
         {
             return driver.FindElement(By.XPath($"//*[contains(text(), { text })]"));
         }
+
+        public static IJavaScriptExecutor Scripts(this IWebDriver driver)
+        {
+            return (IJavaScriptExecutor)driver;
+        }
     }
 }

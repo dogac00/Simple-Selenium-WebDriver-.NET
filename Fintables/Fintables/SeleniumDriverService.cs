@@ -9,7 +9,6 @@ namespace Fintables
 {
     class SeleniumDriverService : ISeleniumDriver
     {
-        private readonly IWebDriver driver;
         private readonly IJavaScriptExecutor js;
 
         public static string ChromePath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
@@ -17,7 +16,7 @@ namespace Fintables
 
         public SeleniumDriverService(IWebDriver driver)
         {
-            this.driver = driver;
+            this.Driver = driver;
             this.js = (IJavaScriptExecutor)driver;
         }
 
@@ -30,33 +29,35 @@ namespace Fintables
             return options;
         }
 
+        public IWebDriver Driver { get; }
+
         public IWebElement FindElementContains(string text)
         {
-            return driver.FindElement(By.XPath($"//*[contains(text(), { text })]"));
+            return Driver.FindElement(By.XPath($"//*[contains(text(), { text })]"));
         }
 
         public IList<IWebElement> FindElementsContains(string text)
         {
-            return driver.FindElements(By.XPath($"//*[contains(text(), '{ text }')]"));
+            return Driver.FindElements(By.XPath($"//*[contains(text(), '{ text }')]"));
         }
 
         public void ConsoleLogJS(string val)
         {
-            IJavaScriptExecutor js = (IJavaScriptExecutor) driver;
+            IJavaScriptExecutor js = (IJavaScriptExecutor) Driver;
 
             js.ExecuteScript($"console.log('{val}')");
         }
 
         public string GetHtmlOfPage(string url)
         {
-            driver.Url = url;
+            Driver.Url = url;
 
-            return driver.PageSource;
+            return Driver.PageSource;
         }
 
         public string GetInnerHTML(string xPath)
         {
-            var element = driver.FindElement(By.XPath(xPath));
+            var element = Driver.FindElement(By.XPath(xPath));
 
             return GetInnerHTML(element);
         }
@@ -68,23 +69,23 @@ namespace Fintables
 
         public void GoToFintables()
         {
-            driver.Url = "https://fintables.com/";
+            Driver.Url = "https://fintables.com/";
 
-            driver.MaximizeWindow();
-            driver.SetTimeout(10);
+            Driver.MaximizeWindow();
+            Driver.SetTimeout(10);
 
             // Click Login Button
-            driver.FindElement(By.XPath("//*[@id='root']/div/section/main/div[1]/div/ul/li[10]/div/a[1]")).Click();
+            Driver.FindElement(By.XPath("//*[@id='root']/div/section/main/div[1]/div/ul/li[10]/div/a[1]")).Click();
 
             // Fill Login Form
-            driver.FindElement(By.XPath("//*[@id='root']/div/section/main/div/div/div[2]/div[2]/form/div[1]/div[2]/div/span/input")).SendKeys("test@test.com");
-            driver.FindElement(By.XPath("//*[@id='root']/div/section/main/div/div/div[2]/div[2]/form/div[2]/div[2]/div/span/input")).SendKeys("test123456");
+            Driver.FindElement(By.XPath("//*[@id='root']/div/section/main/div/div/div[2]/div[2]/form/div[1]/div[2]/div/span/input")).SendKeys("test@test.com");
+            Driver.FindElement(By.XPath("//*[@id='root']/div/section/main/div/div/div[2]/div[2]/form/div[2]/div[2]/div/span/input")).SendKeys("test123456");
 
             // Click Form Submit Button
-            driver.FindElement(By.XPath("//*[@id='root']/div/section/main/div/div/div[2]/div[2]/form/button")).Click();
+            Driver.FindElement(By.XPath("//*[@id='root']/div/section/main/div/div/div[2]/div[2]/form/button")).Click();
 
             // Click Forgotten Button
-            var forgottenButton = driver.FindContains("unuttum");
+            var forgottenButton = Driver.FindContains("unuttum");
 
             forgottenButton.Click();
         }
